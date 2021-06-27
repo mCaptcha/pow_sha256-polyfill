@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "es5",
+    "module": "es2020",
+    "allowJs": false,
+    "sourceMap": true,
+    "outDir": "./dist/bundle",
+    "rootDir": "./src/",
+    "removeComments": true,
+    "moduleResolution": "node",
+
+    //"strict": true,
+    "noImplicitAny": true,
+    //"strictNullChecks": true,
+    //"strictFunctionTypes": true,
+    //"strictBindCallApply": true,
+    //"strictPropertyInitialization": true,
+    //"noImplicitThis": true,
+    //"alwaysStrict": true,
+
+    //"noUnusedLocals": true,
+    //"noUnusedParameters": true,
+    //"noImplicitReturns": true,
+    //"noFallthroughCasesInSwitch": true,
+    //"noUncheckedIndexedAccess": true,
+    //"noPropertyAccessFromIndexSignature": true,
+
+    "esModuleInterop": true,
+
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+    "node_modules",
+    "static",
+    "docs",
+    "jest.config.ts",
+    "**/*.test.ts",
+    "tmp",
+    "**/*setupTests"
+  ],
+
+  "typedocOptions": {
+    "entryPoints": ["src/index.ts"],
+    "out": "docs"
+  }
+}
