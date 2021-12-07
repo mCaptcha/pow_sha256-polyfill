@@ -1,0 +1,55 @@
+name: CI (Linux)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches-ignore:
+      - "!gh-pages"
+
+jobs:
+  build_and_test:
+    name: x86_64-unknown-linux-gnu
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: ⚡ Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/yarn.lock') }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "17.x"
+
+      - name: Install JavaScript Dependencies
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build
+
+      - name: Test
+        run: yarn test
+
+      - name: generate TS documentation
+        run: yarn doc
+
+      - name: Deploy Docuemntation to GitHub Pages
+        if: github.repository == 'mCaptcha/pow_sha256-polyfill' && github.ref == 'refs/heads/master'
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: docs/
+
+      - name: Upload to Codecov
+        if: github.ref == 'refs/heads/master'
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
