@@ -12,20 +12,25 @@
 const U128_MAX = 340282366920938463463374607431768211455n;
 
 /**
- * compute SHA-256 digest of a string
- * @property {string} message - a string on which hash needs to be computed
+ * Compute SHA-256 digest of a string
+ * @param {string} message - a string on which hash needs to be computed
+ * @returns {number[]} - byte array of the hash
  **/
-const digest = async (message: string) => {
+export const digest = async (message: string): Promise<number[]> => {
   const msgUint8 = new TextEncoder().encode(message);
+  msgUint8;
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray;
 };
 
 /**
- * calculate difficulty of  a hash
+ * Calculate difficulty of  a hash
+ *
+ * @param {number[]} hash - hash for which difficulty should be calculated
+ * @returns {BigInt} - diffuclty of the given hash
  */
-const score = (hash: number[]): BigInt => {
+export const score = (hash: number[]): BigInt => {
   let sum = BigInt(0);
 
   for (let i = 15; i >= 0; i--) {
@@ -60,16 +65,18 @@ export const generate_work = async (
   phrase: string,
   difficulty: number
 ): Promise<WasmWork> => {
-  let base = `${salt}${phrase}`;
+  const base = salt + phrase;
   let nonce = 0;
   let result: BigInt = BigInt(0);
-  let difficulty_new = U128_MAX - U128_MAX / BigInt(difficulty);
+  const difficulty_new = U128_MAX - (U128_MAX / BigInt(difficulty));
+  console.log(difficulty_new==340275561273600044694105339939619576091n);
   while (result < difficulty_new) {
     nonce += 1;
-    result = score(await digest(`${base}${nonce}`));
+    const hash = await digest(base + nonce.toString());
+    result = score(hash);
   }
 
-  let work: WasmWork = {
+  const work: WasmWork = {
     result: result.toString(),
     nonce,
   };
