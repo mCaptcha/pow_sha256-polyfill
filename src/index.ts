@@ -10,6 +10,29 @@
  */
 
 const U128_MAX = 340282366920938463463374607431768211455n;
+const encoder = new TextEncoder();
+const decoder = new TextDecoder("utf-8");
+
+const length_metadata = (len: number): number[] => {
+  return [
+    (len & 0x00000000000000ff) >> 0,
+    (len & 0x000000000000ff00) >> 8,
+    (len & 0x0000000000ff0000) >> 16,
+    (len & 0x00000000ff000000) >> 24,
+    (len & 0x000000ff00000000) >> 32,
+    (len & 0x0000ff000000000) >> 48,
+    (len & 0x00ff00000000000) >> 56,
+    Number((BigInt(len) & 0xff0000000000000n) >> BigInt(64)),
+  ];
+};
+
+const serialize = (message: string): Uint8Array => {
+  const len_encoded = length_metadata(message.length);
+  const msgUint8 = new Uint8Array(
+    len_encoded.concat(Array.from(encoder.encode(message)))
+  );
+  return msgUint8;
+};
 
 /**
  * Compute SHA-256 digest of a string
@@ -17,8 +40,8 @@ const U128_MAX = 340282366920938463463374607431768211455n;
  * @returns {number[]} - byte array of the hash
  **/
 export const digest = async (message: string): Promise<number[]> => {
-  const msgUint8 = new TextEncoder().encode(message);
-  msgUint8;
+  const msgUint8 = encoder.encode(message);
+
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray;
@@ -65,11 +88,11 @@ export const generate_work = async (
   phrase: string,
   difficulty: number
 ): Promise<WasmWork> => {
-  const base = salt + phrase;
+  const serialized_phrase = decoder.decode(serialize(phrase));
+  const base = salt + serialized_phrase;
   let nonce = 0;
   let result: BigInt = BigInt(0);
-  const difficulty_new = U128_MAX - (U128_MAX / BigInt(difficulty));
-  console.log(difficulty_new==340275561273600044694105339939619576091n);
+  const difficulty_new = U128_MAX - U128_MAX / BigInt(difficulty);
   while (result < difficulty_new) {
     nonce += 1;
     const hash = await digest(base + nonce.toString());

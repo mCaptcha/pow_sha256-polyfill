@@ -2,7 +2,6 @@
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/en/configuration.html
  */
-
 export default {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -15,6 +14,8 @@ export default {
 
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
+
+  testTimeout: 300000,
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
@@ -31,6 +32,7 @@ export default {
     "setupTests.ts",
     "setUpTests.ts",
     "jest.setup.ts",
+    "test-data.ts",
   ],
 
   // Indicates which provider should be used to instrument code for coverage
