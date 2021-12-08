@@ -15,9 +15,7 @@
 To generate proof-of-work, per mCaptcha specification:
 
 ```typescript
-import {generate_proof} from "@mcaptcha/pow_sha256-polyfill"; /* yet to
-be published in npm */
-
+import {generate_proof} from "@mcaptcha/pow_sha256-polyfill";
 
 let salt = "randomsaltvalueprovidedbymcaptcha";
 let phrase = "randomphrasevalueprovidedbymcaptcha";

@@ -1,12 +1,13 @@
 {
   "author": "Aravinth Manivannan <realaravinth@batsense.net>",
-  "name": "pow_sha256-polyfill",
+  "name": "@mcaptcha/pow_sha256-polyfill",
+  "version": "0.1.0-alpha-1",
   "license": "(MIT OR Apache-2.0)",
-  "keywords": [
-    "mCaptcha",
-    "CAPTCHA",
-    "proof of work"
-  ],
+  "keywords": ["mCaptcha", "CAPTCHA", "proof of work"],
+  "browser": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+
   "homepage": "https://mcaptcha.org",
   "bugs": {
     "url": "https://github.com/mCaptcha/pow_sha256-polyfill/issues",
@@ -16,7 +17,25 @@
     "type": "git",
     "url": "https://github.com/mCaptcha/pow_sha256-polyfill.git"
   },
-  "version": "0.1.0",
+  "funding": [
+    {
+      "type": "individual",
+      "url": "http://mcaptcha.org/donate"
+    },
+    {
+      "type": "liberapay",
+      "url": "https://liberapay.com/mcaptcha"
+    },
+    {
+      "type": "individual",
+      "url": "http://batsense.net/donate"
+    },
+    {
+      "type": "liberapay",
+      "url": "https://liberapay.com/realaravinth"
+    }
+  ],
+
   "scripts": {
     "build": "webpack --mode production",
     "doc": "yarn typedoc src/index.ts",
