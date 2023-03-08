@@ -23,3 +23,21 @@ let difficulty = 50_000;
 
 let work = await generate_proof(salt, phrase, difficulty);
 ```
+
+## Funding
+
+### NLnet
+
+<div align="center">
+	<img
+		height="150px"
+		alt="NLnet NGIZero logo"
+		src="./static/third-party/NGIZero-green.hex.svg"
+	/>
+</div>
+
+<br />
+
+2023 development is funded through the [NGI0 Entrust
+Fund](https://nlnet.nl/entrust), via [NLnet](https://nlnet.nl/). Please
+see [here](https://nlnet.nl/project/mCaptcha/) for more details.
