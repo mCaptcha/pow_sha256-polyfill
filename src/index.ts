@@ -92,7 +92,7 @@ export const generate_work = async (
   const base = salt + serialized_phrase;
   let nonce = 0;
   let result: BigInt = BigInt(0);
-  const difficulty_new = U128_MAX - U128_MAX / BigInt(difficulty);
+  const difficulty_new: BigInt = U128_MAX - U128_MAX / BigInt(difficulty);
   while (result < difficulty_new) {
     nonce += 1;
     const hash = await digest(base + nonce.toString());
