@@ -1,7 +1,7 @@
 {
   "author": "Aravinth Manivannan <realaravinth@batsense.net>",
   "name": "@mcaptcha/pow_sha256-polyfill",
-  "version": "0.1.0-rc1",
+  "version": "0.1.0-rc2",
   "license": "(MIT OR Apache-2.0)",
   "keywords": [
     "mCaptcha",
@@ -67,7 +67,7 @@
     "typedoc": "^0.25.2",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0",
-    "webpack-cli": "^4.9.0",
+    "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   }
 }
